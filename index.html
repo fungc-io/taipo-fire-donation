@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇭🇰 香港大埔火災捐款整合</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", "PingFang TC", "Helvetica Neue", Arial, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        h2 {
+            color: #6c757d;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        .links-list {
+            list-style: none;
+        }
+
+        .link-item {
+            margin-bottom: 15px;
+        }
+
+        .link-item a {
+            display: block;
+            padding: 18px 24px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #495057;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .link-item a:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .link-item a:active {
+            transform: translateY(0);
+        }
+
+        .loading {
+            text-align: center;
+            color: #6c757d;
+            padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 16px;
+            }
+
+            .link-item a {
+                padding: 15px 20px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇭🇰 香港大埔火災捐款整合</h1>
+        <h2>Donation info for Taipo Fire in Hong Kong</h2>
+        <ul class="links-list" id="linksList">
+            <li class="loading">載入中...</li>
+        </ul>
+    </div>
+
+    <script>
+        async function loadLinks() {
+            try {
+                const response = await fetch('./links.json');
+                const links = await response.json();
+                
+                const linksList = document.getElementById('linksList');
+                linksList.innerHTML = '';
+
+                links.forEach(link => {
+                    const li = document.createElement('li');
+                    li.className = 'link-item';
+                    
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.textContent = link.name;
+                    
+                    li.appendChild(a);
+                    linksList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error loading links:', error);
+                document.getElementById('linksList').innerHTML = 
+                    '<li class="loading">載入連結時發生錯誤，請稍後再試。</li>';
+            }
+        }
+
+        // Load links when page loads
+        loadLinks();
+    </script>
+</body>
+</html>
+
