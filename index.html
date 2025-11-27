@@ -41,9 +41,26 @@
         h2 {
             color: #6c757d;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             font-size: 18px;
             font-weight: 400;
+        }
+
+        .description-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .description {
+            color: #6c757d;
+            margin: 0;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .description:first-child {
+            margin-bottom: 8px;
         }
 
         .links-list {
@@ -86,6 +103,24 @@
             padding: 20px;
         }
 
+        .contribution-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .contribution-link a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .contribution-link a:hover {
+            color: #667eea;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 30px 20px;
@@ -99,9 +134,22 @@
                 font-size: 16px;
             }
 
+            .description {
+                font-size: 14px;
+            }
+
+            .description-container {
+                margin-bottom: 25px;
+            }
+
             .link-item a {
                 padding: 15px 20px;
                 font-size: 15px;
+            }
+
+            .contribution-link {
+                margin-top: 25px;
+                padding-top: 25px;
             }
         }
     </style>
@@ -110,9 +158,18 @@
     <div class="container">
         <h1>🇭🇰 香港大埔火災捐款整合</h1>
         <h2>Donation info for Taipo Fire in Hong Kong</h2>
+        <div class="description-container">
+            <p class="description">捐款至協助宏福苑居民嘅本港機構</p>
+            <p class="description">Donate to local organizations supporting Wang Fuk Court residents</p>
+        </div>
         <ul class="links-list" id="linksList">
             <li class="loading">載入中...</li>
         </ul>
+        <div class="contribution-link">
+            <a href="https://github.com/fungc-io/taipo-fire-donation" target="_blank" rel="noopener noreferrer">
+                Add links / 添加連結 →
+            </a>
+        </div>
     </div>
 
     <script>
