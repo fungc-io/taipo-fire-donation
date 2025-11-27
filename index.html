@@ -192,13 +192,20 @@
                 const response = await fetch('./links.json');
                 const links = await response.json();
                 
-                // Randomize the order of links
-                const shuffledLinks = shuffleArray(links);
+                // Separate pinned links from other links
+                const pinnedLinks = links.filter(link => link.pinned === true);
+                const otherLinks = links.filter(link => !link.pinned);
+                
+                // Randomize the order of other links
+                const shuffledLinks = shuffleArray(otherLinks);
+                
+                // Add pinned links at the end
+                const finalLinks = [...shuffledLinks, ...pinnedLinks];
                 
                 const linksList = document.getElementById('linksList');
                 linksList.innerHTML = '';
 
-                shuffledLinks.forEach(link => {
+                finalLinks.forEach(link => {
                     const li = document.createElement('li');
                     li.className = 'link-item';
                     
