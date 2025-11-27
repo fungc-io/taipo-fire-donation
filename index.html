@@ -68,6 +68,19 @@
             margin-bottom: 8px;
         }
 
+        .section-title {
+            color: #333;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
         .links-list {
             list-style: none;
         }
@@ -147,6 +160,11 @@
                 margin-bottom: 25px;
             }
 
+            .section-title {
+                font-size: 14px;
+                margin-top: 25px;
+            }
+
             .link-item a {
                 padding: 15px 20px;
                 font-size: 15px;
@@ -167,8 +185,12 @@
             <p class="description">按以下連結，向支援宏福苑居民嘅本地機構捐款</p>
             <p class="description">Click the links below to donate to local organizations supporting Wang Fuk Court residents.</p>
         </div>
+        <h3 class="section-title">Credit Card / PayMe / FPS / Bank Transfer</h3>
         <ul class="links-list" id="linksList">
             <li class="loading">載入中...</li>
+        </ul>
+        <h3 class="section-title">AlipayHK</h3>
+        <ul class="links-list" id="alipayList">
         </ul>
         <div class="contribution-link">
             <a href="https://github.com/fungc-io/taipo-fire-donation" target="_blank" rel="noopener noreferrer">
@@ -187,37 +209,44 @@
             return shuffled;
         }
 
+        function createLinkElement(link) {
+            const li = document.createElement('li');
+            li.className = 'link-item';
+            
+            const a = document.createElement('a');
+            a.href = link.url;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.textContent = link.name;
+            
+            li.appendChild(a);
+            return li;
+        }
+
         async function loadLinks() {
             try {
+                // Load and randomize links from JSON (first section)
                 const response = await fetch('./links.json');
                 const links = await response.json();
                 
-                // Separate pinned links from other links
-                const pinnedLinks = links.filter(link => link.pinned === true);
-                const otherLinks = links.filter(link => !link.pinned);
-                
-                // Randomize the order of other links
-                const shuffledLinks = shuffleArray(otherLinks);
-                
-                // Add pinned links at the end
-                const finalLinks = [...shuffledLinks, ...pinnedLinks];
+                // Randomize the order of links
+                const shuffledLinks = shuffleArray(links);
                 
                 const linksList = document.getElementById('linksList');
                 linksList.innerHTML = '';
 
-                finalLinks.forEach(link => {
-                    const li = document.createElement('li');
-                    li.className = 'link-item';
-                    
-                    const a = document.createElement('a');
-                    a.href = link.url;
-                    a.target = '_blank';
-                    a.rel = 'noopener noreferrer';
-                    a.textContent = link.name;
-                    
-                    li.appendChild(a);
-                    linksList.appendChild(li);
+                shuffledLinks.forEach(link => {
+                    linksList.appendChild(createLinkElement(link));
                 });
+
+                // Add hardcoded Alipay link (second section)
+                const alipayLink = {
+                    name: "AlipayHK 總匯",
+                    url: "https://common-assets.codpayment.com/assets/sbs/campaign/charity/charity-tp/index.html"
+                };
+                
+                const alipayList = document.getElementById('alipayList');
+                alipayList.appendChild(createLinkElement(alipayLink));
             } catch (error) {
                 console.error('Error loading links:', error);
                 document.getElementById('linksList').innerHTML = 
